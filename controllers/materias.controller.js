@@ -29,9 +29,18 @@ const updateMateria = async(req,res)=>{
     await materia.update(actualizacion)
     res.status(200).json(materia)
   } catch(e){
-    req.status(400).json({message: "Error"})
+    req.status(500).json({message: "Error"})
+  }
+}
+const deleteMateria = async(req,res)=>{
+   try {
+    const id = req.params.id
+    const materia = await Materia.findByPK(id)
+    await materia.destroy()
+    res.status(200).json({message: "Materia eliminada correctamente"})
+  } catch(e){
+    res.status(400).json({message: "Error"})
   }
 }
 
-
-module.exports = {getMaterias, getMateriaById, createMateria, updateMateria}
+module.exports = {getMaterias, getMateriaById, createMateria, updateMateria, deleteMateria}
